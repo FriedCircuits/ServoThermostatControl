@@ -31,7 +31,7 @@ const int heatLED = 13;
 
 
 //Counting check to save temp to EEPROM
-const int saveTempInterval = 120000; //in milliseconds if value has changed
+const long int saveTempInterval = 120000; //in milliseconds if value has changed
 unsigned long saveOldTime = millis();
 
 //Temp handling var
