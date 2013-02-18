@@ -25,7 +25,7 @@ int oldButtonNum= -1;
 
 bool heaterState = false;
 const int heaterBGap = 1; //Gap in degree F before turning on 
-const int heaterAGap = 1; //Gap in degree F before turning off
+const int heaterAGap = 2; //Gap in degree F before turning off
 
 const int heatLED = 13;
 
@@ -79,6 +79,7 @@ void loop()
        
        EEPROM.write(eeAdd, setTemp);
        savedTemp = setTemp;
+       saveOldTime = millis(); //Reset time
        Serial.println(savedTemp);
      
      }
