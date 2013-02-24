@@ -34,6 +34,12 @@ const int heatLED = 13;
 const long int saveTempInterval = 120000; //in milliseconds if value has changed
 unsigned long saveOldTime = millis();
 
+//Interval to check temp
+unsigned long oldGetTemp = saveOldTime;
+const long int getTempInterval = 60000; //in milliseconds to check temp
+
+
+
 //Temp handling var
 int setTemp = 70;
 int currTemp = 0;
@@ -70,16 +76,22 @@ void setup()
 void loop()
 {
   //Refresh current temp 
-  currTemp = getTemp();
+  if (millis() > (oldGetTemp+getTempInterval)){
+  
+    oldGetTemp = millis();
+    currTemp = getTemp();
+  
+  }
    
   //Save setTemp if changed based on interval
   if (millis() > (saveOldTime+saveTempInterval)  ) {
+
+    saveOldTime = millis(); //Reset time
     
      if (setTemp != savedTemp){
        
        EEPROM.write(eeAdd, setTemp);
        savedTemp = setTemp;
-       saveOldTime = millis(); //Reset time
        Serial.println(savedTemp);
      
      }
